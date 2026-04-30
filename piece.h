@@ -14,6 +14,11 @@ class Piece {
         //Destructor, since we are likely to use pointers for this
         virtual ~Piece();
 
+        //Returns true for white, false for black
+        bool isWhite() {
+            return isWhite_;
+        }
+
         //Should return unicode symbol for whatever piece it is, pure virtual since should be piece specific
         virtual std::string getSymbol() const = 0;
 
@@ -35,8 +40,7 @@ class Pawn : public Piece {
 
         //Should check for valid move based off of Pawn move logic (only go up, optionally 2 spaces on first move,
         // diagonal up if enemy)
-
-        bool getMove(Board* board, int sRow, int sCol, int eRow, int eCol) const;
+        bool getMove(Board* board, int sRow, int sCol, int eRow, int eCol) ;
 
     private:
         //Used to check to see if Pawn can move twice up or not
