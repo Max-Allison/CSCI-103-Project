@@ -18,7 +18,7 @@ Pawn::Pawn(bool isWhite) : Piece(isWhite) {
 }
 
 string Pawn::getSymbol() const {
-    if (isWhite_) {
+    if (!isWhite_) {
         return "♙";
     } else {
         return "♟";
@@ -67,7 +67,7 @@ bool Pawn::getMove(Board* board, int sRow, int sCol, int eRow, int eCol) {
 Rook::Rook(bool isWhite) : Piece(isWhite) {}
 
 string Rook::getSymbol() const {
-    if (isWhite_) {
+    if (!isWhite_) {
         return "♖";
     } else {
         return "♜";
@@ -145,7 +145,7 @@ bool Rook::getMove(Board* board, int sRow, int sCol, int eRow, int eCol) {
 Knight::Knight(bool isWhite) : Piece(isWhite) {}
 
 string Knight::getSymbol() const {
-    if (isWhite_) {
+    if (!isWhite_) {
         return "♘";
     } else {
         return "♞";
@@ -184,7 +184,7 @@ bool Knight::getMove(Board* board, int sRow, int sCol, int eRow, int eCol) {
 Bishop::Bishop(bool isWhite) : Piece(isWhite) {}
 
 string Bishop::getSymbol() const {
-    if (isWhite_) {
+    if (!isWhite_) {
         return "♗";
     } else {
         return "♝";
@@ -278,7 +278,7 @@ bool Bishop::getMove(Board* board, int sRow, int sCol, int eRow, int eCol) {
 Queen::Queen(bool isWhite) : Piece(isWhite) {}
 
 string Queen::getSymbol() const {
-    if (isWhite_) {
+    if (!isWhite_) {
         return "♕";
     } else {
         return "♛";
@@ -424,7 +424,7 @@ bool Queen::getMove(Board* board, int sRow, int sCol, int eRow, int eCol) {
 King::King(bool isWhite) : Piece(isWhite) {}
 
 string King::getSymbol() const {
-    if (isWhite_) {
+    if (!isWhite_) {
         return "♔";
     } else {
         return "♚";
