@@ -64,7 +64,7 @@ bool Pawn::getMove(Board* board, int sRow, int sCol, int eRow, int eCol) {
 }
 
 //Rook Stuff
-Rook::Rook(bool isWhite_) : Piece(isWhite) {}
+Rook::Rook(bool isWhite) : Piece(isWhite) {}
 
 string Rook::getSymbol() const {
     if (isWhite_) {
@@ -74,12 +74,75 @@ string Rook::getSymbol() const {
     }
 }
 
-bool Rook::getMove(Board* board, int sRow, int sCol, int eRow, int eCol) const {
+bool Rook::getMove(Board* board, int sRow, int sCol, int eRow, int eCol) {
+    //Check that bounds are good
+    if (eRow > 7 || eRow < 0 || eCol > 7 || eCol < 0) {
+        return false;
+    }
 
+    //Keep a pointer to whatever piece is located at the end point
+    Piece* capturedPiece = board->getPiece(eRow, eCol);
+
+    //First check to see what direction
+    //Going Up
+    if (eRow > sRow && eCol == sCol) {
+        for (int i = sRow + 1; i < eRow; i++) {
+            if (board->getPiece(i, sCol) != nullptr) {
+                return false;
+            } 
+        } if (capturedPiece != nullptr) { 
+            if (capturedPiece->isWhite() != isWhite_) {
+                return true;
+            } else {return false;}
+        } else {
+            return true;
+        }
+    } //Going Down
+    else if (eRow < sRow && eCol == sCol) {
+        for (int i = sRow - 1; i > eRow; i--) {
+            if (board->getPiece(i, sCol) != nullptr) {
+                return false;
+            } 
+        } if (capturedPiece != nullptr) { 
+            if (capturedPiece->isWhite() != isWhite_) {
+                return true;
+            } else {return false;}
+        } else {
+            return true;
+        }
+    } //Going Right
+    else if (eRow == sRow && eCol > sCol) {
+        for (int i = sCol + 1; i < eCol; i++) {
+            if (board->getPiece(sRow, i) != nullptr) {
+                return false;
+            } 
+        } if (capturedPiece != nullptr) { 
+            if (capturedPiece->isWhite() != isWhite_) {
+                return true;
+            } else {return false;}
+        } else {
+            return true;
+        }
+    } //Going Left
+    else if (eRow == sRow && eCol < sCol) {
+        for (int i = sCol - 1; i > eCol; i--) {
+            if (board->getPiece(sRow, i) != nullptr) {
+                return false;
+            } 
+        } if (capturedPiece != nullptr) { 
+            if (capturedPiece->isWhite() != isWhite_) {
+                return true;
+            } else {return false;}
+        } else {
+            return true;
+        }
+    } else {
+        return false;
+    }
 }
 
 //Knight Stuff
-Knight::Knight(bool isWhite_) : Piece(isWhite) {}
+Knight::Knight(bool isWhite) : Piece(isWhite) {}
 
 string Knight::getSymbol() const {
     if (isWhite_) {
@@ -89,12 +152,36 @@ string Knight::getSymbol() const {
     }
 }
 
-bool Knight::getMove(Board* board, int sRow, int sCol, int eRow, int eCol) const {
+bool Knight::getMove(Board* board, int sRow, int sCol, int eRow, int eCol) {
+    //Check that bounds are good
+    if (eRow > 7 || eRow < 0 || eCol > 7 || eCol < 0) {
+        return false;
+    }
 
+    //Keep a pointer to whatever piece is located at the end point
+    Piece* capturedPiece = board->getPiece(eRow, eCol);
+
+    //Check directions
+    //Up Left & Right
+    if ((eRow - sRow == 2 && (eCol - sCol == 1 || eCol - sCol == -1)) 
+        //Down Left & Right
+        || (eRow - sRow == -2 && (eCol - sCol == 1 || eCol - sCol == -1))
+        //Right Up & Down 
+        || (eCol - sCol == 2 && (eRow - sRow == 1 || eRow - sRow == -1))
+        //Left Up & Down 
+        || (eCol - sCol == -2 && (eRow - sRow == 1 || eRow - sRow == -1)) ) {
+            if (capturedPiece != nullptr) {
+                if (capturedPiece->isWhite() != isWhite_) {
+                    return true;
+                } else {return false;}
+            } else {return true;}
+        } else {
+            return false;
+        }
 }
 
 //Bishop Stuff
-Bishop::Bishop(bool isWhite_) : Piece(isWhite) {}
+Bishop::Bishop(bool isWhite) : Piece(isWhite) {}
 
 string Bishop::getSymbol() const {
     if (isWhite_) {
@@ -104,12 +191,91 @@ string Bishop::getSymbol() const {
     }
 }
 
-bool Bishop::getMove(Board* board, int sRow, int sCol, int eRow, int eCol) const {
+bool Bishop::getMove(Board* board, int sRow, int sCol, int eRow, int eCol) {
+    //Check that bounds are good
+    if (eRow > 7 || eRow < 0 || eCol > 7 || eCol < 0) {
+        return false;
+    }
 
+    //Keep a pointer to whatever piece is located at the end point
+    Piece* capturedPiece = board->getPiece(eRow, eCol);
+
+    //Check for which direction
+    //Up Right
+    if (eRow > sRow && eCol > sCol && eRow - sRow == eCol - sCol) {
+        int j = sCol + 1;
+        for (int i = sRow + 1; i < eRow; i++) {
+            if (board->getPiece(i, j) != nullptr) {
+                return false;
+            }
+            j++;
+        } if (capturedPiece != nullptr) {
+            if (capturedPiece->isWhite() != isWhite_) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    } //Up Left
+    else if (eRow > sRow && eCol < sCol && eRow - sRow == sCol - eCol) {
+        int j = sCol - 1;
+        for (int i = sRow + 1; i < eRow; i++) {
+            if (board->getPiece(i, j) != nullptr) {
+                return false;
+            }
+            j--;
+        } if (capturedPiece != nullptr) {
+            if (capturedPiece->isWhite() != isWhite_) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    } //Down Right
+    else if (eRow < sRow && eCol > sCol && sRow - eRow == eCol - sCol) {
+        int j = sCol + 1;
+        for (int i = sRow - 1; i > eRow; i++) {
+            if (board->getPiece(i, j) != nullptr) {
+                return false;
+            }
+            j++;
+        } if (capturedPiece != nullptr) {
+            if (capturedPiece->isWhite() != isWhite_) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    } //Down Left
+    else if (eRow < sRow && eCol < sCol && sRow - eRow == sCol - eCol) {
+        int j = sCol - 1;
+        for (int i = sRow - 1; i > eRow; i++) {
+            if (board->getPiece(i, j) != nullptr) {
+                return false;
+            }
+            j--;
+        } if (capturedPiece != nullptr) {
+            if (capturedPiece->isWhite() != isWhite_) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    } else {
+        return false;
+    }
 }
 
 //Queen Stuff
-Queen::Queen(bool isWhite_) : Piece(isWhite) {}
+Queen::Queen(bool isWhite) : Piece(isWhite) {}
 
 string Queen::getSymbol() const {
     if (isWhite_) {
@@ -119,12 +285,143 @@ string Queen::getSymbol() const {
     }
 }
 
-bool Queen::getMove(Board* board, int sRow, int sCol, int eRow, int eCol) const {
+bool Queen::getMove(Board* board, int sRow, int sCol, int eRow, int eCol) {
+    //Check that bounds are good
+    if (eRow > 7 || eRow < 0 || eCol > 7 || eCol < 0) {
+        return false;
+    }
 
+    //Keep a pointer to whatever piece is located at the end point
+    Piece* capturedPiece = board->getPiece(eRow, eCol);
+
+    //Check for which direction (just copies rook and bishop movement)
+    //Going Up
+    if (eRow > sRow && eCol == sCol) {
+        for (int i = sRow + 1; i < eRow; i++) {
+            if (board->getPiece(i, sCol) != nullptr) {
+                return false;
+            } 
+        } if (capturedPiece != nullptr) { 
+            if (capturedPiece->isWhite() != isWhite_) {
+                return true;
+            } else {return false;}
+        } else {
+            return true;
+        }
+    } //Going Down
+    else if (eRow < sRow && eCol == sCol) {
+        for (int i = sRow - 1; i > eRow; i--) {
+            if (board->getPiece(i, sCol) != nullptr) {
+                return false;
+            } 
+        } if (capturedPiece != nullptr) { 
+            if (capturedPiece->isWhite() != isWhite_) {
+                return true;
+            } else {return false;}
+        } else {
+            return true;
+        }
+    } //Going Right
+    else if (eRow == sRow && eCol > sCol) {
+        for (int i = sCol + 1; i < eCol; i++) {
+            if (board->getPiece(sRow, i) != nullptr) {
+                return false;
+            } 
+        } if (capturedPiece != nullptr) { 
+            if (capturedPiece->isWhite() != isWhite_) {
+                return true;
+            } else {return false;}
+        } else {
+            return true;
+        }
+    } //Going Left
+    else if (eRow == sRow && eCol < sCol) {
+        for (int i = sCol - 1; i > eCol; i--) {
+            if (board->getPiece(sRow, i) != nullptr) {
+                return false;
+            } 
+        } if (capturedPiece != nullptr) { 
+            if (capturedPiece->isWhite() != isWhite_) {
+                return true;
+            } else {return false;}
+        } else {
+            return true;
+        }
+    } //Up Right 
+    else if (eRow > sRow && eCol > sCol && eRow - sRow == eCol - sCol) {
+        int j = sCol + 1;
+        for (int i = sRow + 1; i < eRow; i++) {
+            if (board->getPiece(i, j) != nullptr) {
+                return false;
+            }
+            j++;
+        } if (capturedPiece != nullptr) {
+            if (capturedPiece->isWhite() != isWhite_) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    } //Up Left
+    else if (eRow > sRow && eCol < sCol && eRow - sRow == sCol - eCol) {
+        int j = sCol - 1;
+        for (int i = sRow + 1; i < eRow; i++) {
+            if (board->getPiece(i, j) != nullptr) {
+                return false;
+            }
+            j--;
+        } if (capturedPiece != nullptr) {
+            if (capturedPiece->isWhite() != isWhite_) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    } //Down Right
+    else if (eRow < sRow && eCol > sCol && sRow - eRow == eCol - sCol) {
+        int j = sCol + 1;
+        for (int i = sRow - 1; i > eRow; i++) {
+            if (board->getPiece(i, j) != nullptr) {
+                return false;
+            }
+            j++;
+        } if (capturedPiece != nullptr) {
+            if (capturedPiece->isWhite() != isWhite_) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    } //Down Left
+    else if (eRow < sRow && eCol < sCol && sRow - eRow == sCol - eCol) {
+        int j = sCol - 1;
+        for (int i = sRow - 1; i > eRow; i++) {
+            if (board->getPiece(i, j) != nullptr) {
+                return false;
+            }
+            j--;
+        } if (capturedPiece != nullptr) {
+            if (capturedPiece->isWhite() != isWhite_) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    } else {
+        return false;
+    }
 }
 
 //King Stuff
-King::King(bool isWhite_) : Piece(isWhite) {}
+King::King(bool isWhite) : Piece(isWhite) {}
 
 string King::getSymbol() const {
     if (isWhite_) {
@@ -134,6 +431,28 @@ string King::getSymbol() const {
     }
 }
 
-bool King::getMove(Board* board, int sRow, int sCol, int eRow, int eCol) const {
+bool King::getMove(Board* board, int sRow, int sCol, int eRow, int eCol) {
+    //Check that bounds are good
+    if (eRow > 7 || eRow < 0 || eCol > 7 || eCol < 0) {
+        return false;
+    }
 
+    //Keep a pointer to whatever piece is located at the end point
+    Piece* capturedPiece = board->getPiece(eRow, eCol);
+
+    //Check to make sure not same square as king
+    if (eRow == sRow && eCol == sCol) {
+        return false;
+    }
+
+    //Check move is to adjacent square
+    if (eRow - sRow <= 1 && eRow - sRow >= -1 && eCol - sCol <= 1 && eCol - sCol >= -1) {
+        if (capturedPiece != nullptr) {
+            if (capturedPiece->isWhite() != isWhite_) {
+                return true;
+            } else {return false;}
+        } else {return true;}
+    } else {
+        return false;
+    }
 }

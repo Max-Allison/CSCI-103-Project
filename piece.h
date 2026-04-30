@@ -24,7 +24,7 @@ class Piece {
 
         // Should return if a move is possible or not, takes the board as well as the starting location and ending
         // location to check for valid moves
-        virtual bool getMove(Board* board, int sRow, int sCol, int eRow, int eCol) const = 0;
+        virtual bool getMove(Board* board, int sRow, int sCol, int eRow, int eCol) = 0;
 
     protected:
         bool isWhite_;
@@ -57,7 +57,7 @@ class Rook : public Piece {
 
         //Should check for valid move based off of Rook move logic (left, right, up, down, straight line
         // until wall or enemy, might include castling but not necessary )
-        bool getMove(Board* board, int sRow, int sCol, int eRow, int eCol) const;
+        bool getMove(Board* board, int sRow, int sCol, int eRow, int eCol);
 };
 
 class Knight : public Piece {
@@ -70,7 +70,7 @@ class Knight : public Piece {
 
         //Should check for valid move based off of Knight move logic (L, straight in any direction 2,
         // then 1 on either side)
-        bool getMove(Board* board, int sRow, int sCol, int eRow, int eCol) const;
+        bool getMove(Board* board, int sRow, int sCol, int eRow, int eCol);
 };
 
 class Bishop : public Piece {
@@ -83,7 +83,7 @@ class Bishop : public Piece {
 
         //Should check for valid move based off of Bishop move logic (diagonal movement in any direction until,
         // wall or enemy)
-        bool getMove(Board* board, int sRow, int sCol, int eRow, int eCol) const;
+        bool getMove(Board* board, int sRow, int sCol, int eRow, int eCol);
 };
 
 class Queen : public Piece {
@@ -95,7 +95,7 @@ class Queen : public Piece {
         std::string getSymbol() const;
 
         //Should check for valid move based off of Queen move logic (bishop + rook move logic)
-        bool getMove(Board* board, int sRow, int sCol, int eRow, int eCol) const;
+        bool getMove(Board* board, int sRow, int sCol, int eRow, int eCol);
 };
 
 class King : public Piece {
@@ -107,6 +107,6 @@ class King : public Piece {
         std::string getSymbol() const;
 
         //Should check for valid move based off of King move logic (1 space in any direction)
-        bool getMove(Board* board, int sRow, int sCol, int eRow, int eCol) const;
+        bool getMove(Board* board, int sRow, int sCol, int eRow, int eCol);
 };
 #endif
