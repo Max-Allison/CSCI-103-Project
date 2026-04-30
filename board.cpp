@@ -12,6 +12,8 @@ Board::Board() {
         }
     }
     resetBoard();
+    isBlackKingAlive_ = true;
+    isWhiteKingAlive_ = true;
 }
 
 // Clean up all allocated pieces
@@ -102,6 +104,15 @@ bool Board::movePiece(int sRow, int sCol, int eRow, int eCol) {
         return false;
     }
 
+    //Check if captured piece is a king
+    if (board_[eRow][eCol] != nullptr) {
+        if (board_[eRow][eCol]->getSymbol() == "♔") {
+            isBlackKingAlive_ = false;
+        } else if (board_[eRow][eCol]->getSymbol() == "♚") {
+            isWhiteKingAlive_ = false;
+        }
+    }
+
     // Remove captured piece if there is one
     delete board_[eRow][eCol];
 
@@ -133,4 +144,12 @@ void Board::printBoard() const {
     }
 
     cout << "  a b c d e f g h" << endl;
+}
+
+bool Board::isBlackKingAlive() const {
+    return isBlackKingAlive_;
+}
+
+bool Board::isWhiteKingAlive() const {
+    return isWhiteKingAlive_;
 }

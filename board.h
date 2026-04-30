@@ -37,9 +37,14 @@ class Board {
         */
         void printBoard() const;
 
+        bool isWhiteKingAlive() const;
+        bool isBlackKingAlive() const;
+
         
     private:
         Piece* board_[8][8];
+        bool isWhiteKingAlive_;
+        bool isBlackKingAlive_;
 
         //Helper: checks if position is inside board
         bool inBounds(int row, int col) const;

@@ -24,9 +24,13 @@ int main() {
         while (whiteTurn) {
             cout << "White's Move: ";
             cin >> sCol >> sRow >> eCol >> eRow;
-            if (board->movePiece(sRow, sCol - 'a', eRow, eCol - 'a')) {
+            if (board->movePiece(sRow - 1, sCol - 'a', eRow - 1, eCol - 'a')) {
                 whiteTurn = false;
                 board->printBoard();
+                if (!board->isBlackKingAlive()) {
+                    playing = false;
+                    cout << "White Wins!";
+                }
             } else {
                 cout << "Hey that's an invalid move! Try again!" << endl;
             }
@@ -35,9 +39,13 @@ int main() {
         while (!whiteTurn) {
             cout << "Black's Move: ";
             cin >> sCol >> sRow >> eCol >> eRow;
-            if (board->movePiece(sRow, sCol - 'a', eRow, eCol - 'a')) {
+            if (board->movePiece(sRow - 1, sCol - 'a', eRow - 1, eCol - 'a')) {
                 whiteTurn = true;
                 board->printBoard();
+                if (!board->isWhiteKingAlive()) {
+                    playing = false;
+                    cout << "Black Wins!";
+                }
             } else {
                 cout << "Hey that's an invalid move! Try again!" << endl;
             }
