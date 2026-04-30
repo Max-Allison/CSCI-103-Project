@@ -41,6 +41,11 @@ class Board {
     private:
         Piece* board_[8][8];
 
+        //Helper: checks if position is inside board
+        bool inBounds(int row, int col) const;
+
+        //Helper: deletes all pieces (used in reset + destructor)
+        void clearBoard();
 };
 
 #endif
