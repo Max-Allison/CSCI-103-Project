@@ -24,20 +24,22 @@ int main() {
         while (whiteTurn) {
             cout << "White's Move: ";
             cin >> sCol >> sRow >> eCol >> eRow;
-            if (board->movePiece(sRow, sCol, eRow, eCol)) {
+            if (board->movePiece(sRow, sCol - 'a', eRow, eCol - 'a')) {
                 whiteTurn = false;
+                board->printBoard();
             } else {
-                cout << "Hey that's an invalid move! Try again!";
+                cout << "Hey that's an invalid move! Try again!" << endl;
             }
         }
         //Black Turn Loop
         while (!whiteTurn) {
             cout << "Black's Move: ";
             cin >> sCol >> sRow >> eCol >> eRow;
-            if (board->movePiece(sRow, sCol, eRow, eCol)) {
+            if (board->movePiece(sRow, sCol - 'a', eRow, eCol - 'a')) {
                 whiteTurn = true;
+                board->printBoard();
             } else {
-                cout << "Hey that's an invalid move! Try again!";
+                cout << "Hey that's an invalid move! Try again!" << endl;
             }
         }
     }
