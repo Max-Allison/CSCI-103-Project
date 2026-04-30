@@ -12,8 +12,6 @@ Board::Board() {
         }
     }
     resetBoard();
-    isBlackKingAlive_ = true;
-    isWhiteKingAlive_ = true;
 }
 
 // Clean up all allocated pieces
@@ -64,6 +62,8 @@ void Board::resetBoard() {
     for (int c = 0; c < 8; c++) {
         board_[6][c] = new Pawn(false);
     }
+    isBlackKingAlive_ = true;
+    isWhiteKingAlive_ = true;
 }
 
 // Check if position is valid

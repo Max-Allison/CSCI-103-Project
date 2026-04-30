@@ -12,6 +12,7 @@ int main() {
     int sRow;
     char eCol;
     int eRow;
+    char playagain;
 
 
     
@@ -29,14 +30,14 @@ int main() {
                 board->printBoard();
                 if (!board->isBlackKingAlive()) {
                     playing = false;
-                    cout << "White Wins!";
+                    cout << "White Wins!" << endl;
                 }
             } else {
                 cout << "Hey that's an invalid move! Try again!" << endl;
             }
         }
         //Black Turn Loop
-        while (!whiteTurn) {
+        while (!whiteTurn && playing) {
             cout << "Black's Move: ";
             cin >> sCol >> sRow >> eCol >> eRow;
             if (board->movePiece(sRow - 1, sCol - 'a', eRow - 1, eCol - 'a')) {
@@ -44,13 +45,28 @@ int main() {
                 board->printBoard();
                 if (!board->isWhiteKingAlive()) {
                     playing = false;
-                    cout << "Black Wins!";
+                    cout << "Black Wins!" << endl;
                 }
             } else {
                 cout << "Hey that's an invalid move! Try again!" << endl;
             }
         }
+        if (!playing) {
+            cout << "Want to play again (y/n)" << endl;
+            cin >> playagain;
+            if (playagain == 'y') {
+                playing = true;
+                whiteTurn = true;
+                board->resetBoard();
+                board->printBoard();
+                cout << "Time for some chess! Make sure to enter pieces and targets as Coloum by Row (letter-number)!" << endl;
+            } else {
+                cout << "Okay bye!" << endl;
+            }
+        }
     }
+
+
 
     return 0;
 }

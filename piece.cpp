@@ -238,7 +238,7 @@ bool Bishop::getMove(Board* board, int sRow, int sCol, int eRow, int eCol) {
     } //Down Right
     else if (eRow < sRow && eCol > sCol && sRow - eRow == eCol - sCol) {
         int j = sCol + 1;
-        for (int i = sRow - 1; i > eRow; i++) {
+        for (int i = sRow - 1; i > eRow; i--) {
             if (board->getPiece(i, j) != nullptr) {
                 return false;
             }
@@ -255,7 +255,7 @@ bool Bishop::getMove(Board* board, int sRow, int sCol, int eRow, int eCol) {
     } //Down Left
     else if (eRow < sRow && eCol < sCol && sRow - eRow == sCol - eCol) {
         int j = sCol - 1;
-        for (int i = sRow - 1; i > eRow; i++) {
+        for (int i = sRow - 1; i > eRow; i--) {
             if (board->getPiece(i, j) != nullptr) {
                 return false;
             }
@@ -384,7 +384,7 @@ bool Queen::getMove(Board* board, int sRow, int sCol, int eRow, int eCol) {
     } //Down Right
     else if (eRow < sRow && eCol > sCol && sRow - eRow == eCol - sCol) {
         int j = sCol + 1;
-        for (int i = sRow - 1; i > eRow; i++) {
+        for (int i = sRow - 1; i > eRow; i--) {
             if (board->getPiece(i, j) != nullptr) {
                 return false;
             }
@@ -401,7 +401,7 @@ bool Queen::getMove(Board* board, int sRow, int sCol, int eRow, int eCol) {
     } //Down Left
     else if (eRow < sRow && eCol < sCol && sRow - eRow == sCol - eCol) {
         int j = sCol - 1;
-        for (int i = sRow - 1; i > eRow; i++) {
+        for (int i = sRow - 1; i > eRow; i--) {
             if (board->getPiece(i, j) != nullptr) {
                 return false;
             }
