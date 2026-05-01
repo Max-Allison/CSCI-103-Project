@@ -4,8 +4,8 @@
 #ifdef _WIN32
 #include <windows.h>
 #include <ctime>
-#include "enemyAi.h"
 #endif
+#include "enemyAi.h"
 
 using namespace std;
 
